@@ -12,9 +12,9 @@ import Foundation
 class ViewController: UIViewController {
 
     @IBOutlet weak var display: UILabel!
-    
     var userIsInTheMiddleOfTypingANumber = false
     var userIsInTheMiddleOfTypingAFloat = false
+    var operandStack = Array<Double>()
 
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
@@ -36,6 +36,14 @@ class ViewController: UIViewController {
             }
             userIsInTheMiddleOfTypingAFloat = true
         }
+    }
+    
+    @IBAction func clear() {
+        userIsInTheMiddleOfTypingANumber = false
+        userIsInTheMiddleOfTypingAFloat = false
+        operandStack = Array<Double>()
+        display.text = "0"
+        println("\(operandStack)")
     }
     
     @IBAction func appendPi() {
@@ -77,8 +85,6 @@ class ViewController: UIViewController {
             enter()
         }
     }
-    
-    var operandStack = Array<Double>()
 
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
