@@ -36,13 +36,6 @@ class ViewController: UIViewController {
         println("\(operandStack)")
     }
     
-    @IBAction func appendPi() {
-        if userIsInTheMiddleOfTypingANumber {
-            enter()
-        }
-        displayValue = M_PI
-        enter()
-    }
     
     @IBAction func operate(sender: UIButton) {
         let operation = sender.currentTitle!
@@ -57,6 +50,7 @@ class ViewController: UIViewController {
         case "√": performOperation { sqrt($0) }
         case "sin": performOperation { sin($0) }
         case "cos": performOperation { cos($0) }
+        case "π": performOperation(M_PI)
         default: break
         }
     }
@@ -74,6 +68,14 @@ class ViewController: UIViewController {
             displayValue = operation(operandStack.removeLast())
             enter()
         }
+    }
+    
+    private func performOperation(constant: Double) {
+        if userIsInTheMiddleOfTypingANumber {
+            enter()
+        }
+        displayValue = constant
+        enter()
     }
 
     @IBAction func enter() {
