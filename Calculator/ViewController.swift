@@ -12,8 +12,8 @@ import Foundation
 class ViewController: UIViewController {
     
     var userIsInTheMiddleOfTypingANumber = false
-    var operandStack = Array<Double>()
-    var history = Array<String>()
+        var history = Array<String>()
+    var brain = CalculatorBrain()
     @IBOutlet weak var historyDisplay: UILabel!
     @IBOutlet weak var display: UILabel!
 
@@ -33,51 +33,24 @@ class ViewController: UIViewController {
     
     @IBAction func clear() {
         userIsInTheMiddleOfTypingANumber = false
-        operandStack = Array<Double>()
         display.text = "0"
         history = Array<String>()
         historyDisplay.text = "\(history)"
-        println("\(operandStack)")
     }
     
     
     @IBAction func operate(sender: UIButton) {
-        let operation = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
-            addOperand()
-            addHistory(display.text!)
+            enter()
         }
-        addHistory(operation)
-        switch operation {
-        case "×": performOperation { $0 * $1 }
-        case "÷": performOperation { $1 / $0 }
-        case "+": performOperation { $0 + $1 }
-        case "−": performOperation { $1 - $0 }
-        case "√": performOperation { sqrt($0) }
-        case "sin": performOperation { sin($0) }
-        case "cos": performOperation { cos($0) }
-        case "π": performOperation(M_PI)
-        default: break
+        if let operation = sender.currentTitle {
+            addHistory(operation)
+            if let result = brain.performOperation(operation) {
+                displayValue = result
+            } else {
+                displayValue = 0
+            }
         }
-    }
-    
-    private func performOperation(operation: (Double, Double) -> Double) {
-        if operandStack.count >= 2 {
-            displayValue = operation(operandStack.removeLast(), operandStack.removeLast())
-            addOperand()
-        }
-    }
-    
-    private func performOperation(operation: Double -> Double) {
-        if operandStack.count >= 1 {
-            displayValue = operation(operandStack.removeLast())
-            addOperand()
-        }
-    }
-    
-    private func performOperation(constant: Double) {
-        displayValue = constant
-        addOperand()
     }
 
     @IBAction func enter() {
@@ -87,8 +60,11 @@ class ViewController: UIViewController {
     
     private func addOperand() {
         userIsInTheMiddleOfTypingANumber = false
-        operandStack.append(displayValue)
-        println("\(operandStack)")
+        if let result = brain.pushOperand(displayValue) {
+            displayValue = result
+        } else {
+            displayValue = 0
+        }
     }
     
     private func addHistory(item: String) {
