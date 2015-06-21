@@ -394,6 +394,7 @@
                     </view>
                     <connections>
                         <outlet property="display" destination="8B4-5o-5oR" id="GVD-Ax-X78"/>
+                        <outlet property="historyDisplay" destination="XOK-Gc-Jkc" id="f0U-lU-dQd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

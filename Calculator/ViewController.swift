@@ -10,11 +10,12 @@ import UIKit
 import Foundation
 
 class ViewController: UIViewController {
-
-    @IBOutlet weak var display: UILabel!
+    
     var userIsInTheMiddleOfTypingANumber = false
     var operandStack = Array<Double>()
     var history = Array<String>()
+    @IBOutlet weak var historyDisplay: UILabel!
+    @IBOutlet weak var display: UILabel!
 
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
@@ -34,6 +35,8 @@ class ViewController: UIViewController {
         userIsInTheMiddleOfTypingANumber = false
         operandStack = Array<Double>()
         display.text = "0"
+        history = Array<String>()
+        historyDisplay.text = "\(history)"
         println("\(operandStack)")
     }
     
@@ -41,8 +44,10 @@ class ViewController: UIViewController {
     @IBAction func operate(sender: UIButton) {
         let operation = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
-            enter()
+            addOperand()
+            addHistory(display.text!)
         }
+        addHistory(operation)
         switch operation {
         case "×": performOperation { $0 * $1 }
         case "÷": performOperation { $1 / $0 }
@@ -56,30 +61,39 @@ class ViewController: UIViewController {
         }
     }
     
-    func performOperation(operation: (Double, Double) -> Double) {
+    private func performOperation(operation: (Double, Double) -> Double) {
         if operandStack.count >= 2 {
             displayValue = operation(operandStack.removeLast(), operandStack.removeLast())
-            enter()
+            addOperand()
         }
-        
     }
     
     private func performOperation(operation: Double -> Double) {
         if operandStack.count >= 1 {
             displayValue = operation(operandStack.removeLast())
-            enter()
+            addOperand()
         }
     }
     
     private func performOperation(constant: Double) {
         displayValue = constant
-        enter()
+        addOperand()
     }
 
     @IBAction func enter() {
+        addOperand()
+        addHistory(display.text!)
+    }
+    
+    private func addOperand() {
         userIsInTheMiddleOfTypingANumber = false
         operandStack.append(displayValue)
         println("\(operandStack)")
+    }
+    
+    private func addHistory(item: String) {
+        history.insert(item, atIndex: 0)
+        historyDisplay.text = "\(history)"
     }
     
     var displayValue: Double {
