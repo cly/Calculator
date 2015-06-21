@@ -13,34 +13,24 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var display: UILabel!
     var userIsInTheMiddleOfTypingANumber = false
-    var userIsInTheMiddleOfTypingAFloat = false
     var operandStack = Array<Double>()
 
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
-        if userIsInTheMiddleOfTypingANumber {
-            display.text = display.text! + digit
-        } else {
-            display.text = digit
-            userIsInTheMiddleOfTypingANumber = true
-        }
-    }
-    
-    @IBAction func appendDot() {
-        if !userIsInTheMiddleOfTypingAFloat {
+        
+        // If a number or if . is not in value already, then do work.
+        if digit.rangeOfString(".") == nil || display.text!.rangeOfString(".") == nil {
             if userIsInTheMiddleOfTypingANumber {
-                display.text = display.text! + "."
+                display.text = display.text! + digit
             } else {
-                display.text = "0."
+                display.text = digit
                 userIsInTheMiddleOfTypingANumber = true
             }
-            userIsInTheMiddleOfTypingAFloat = true
         }
     }
     
     @IBAction func clear() {
         userIsInTheMiddleOfTypingANumber = false
-        userIsInTheMiddleOfTypingAFloat = false
         operandStack = Array<Double>()
         display.text = "0"
         println("\(operandStack)")
@@ -88,7 +78,6 @@ class ViewController: UIViewController {
 
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
-        userIsInTheMiddleOfTypingAFloat = false
         operandStack.append(displayValue)
         println("\(operandStack)")
     }
