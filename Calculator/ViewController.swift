@@ -38,7 +38,6 @@ class ViewController: UIViewController {
         historyDisplay.text = "\(history)"
     }
     
-    
     @IBAction func operate(sender: UIButton) {
         if userIsInTheMiddleOfTypingANumber {
             enter()
@@ -87,7 +86,7 @@ class ViewController: UIViewController {
             if let test = newValue {
                 display.text = "\(test)"
             } else {
-                display.text = "An error has occurred"
+                clear()
             }
             userIsInTheMiddleOfTypingANumber = false
         }
