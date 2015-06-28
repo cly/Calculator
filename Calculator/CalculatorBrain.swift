@@ -14,6 +14,8 @@ class CalculatorBrain
         case Operand(Double)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
+        case Variable(String)
+        case Constant(String)
         
         var description: String {
             get {
@@ -24,14 +26,19 @@ class CalculatorBrain
                     return symbol
                 case .BinaryOperation(let symbol, _):
                     return symbol
+                case .Variable(let key):
+                    return key
+                case .Constant(let key):
+                    return key
                 }
-                
             }
         }
     }
     
     private var opStack = [Op]()
     private var knownOps = [String:Op]()
+    var variableValues = [String:Double]()
+    let constantValues = ["π": M_PI]
     
     init() {
         func learnOp(op: Op) {
@@ -41,6 +48,8 @@ class CalculatorBrain
         learnOp(Op.BinaryOperation("÷", { $1 / $0 }))
         learnOp(Op.BinaryOperation("+", +))
         learnOp(Op.BinaryOperation("−", { $1 * $0 }))
+        learnOp(Op.UnaryOperation("sin", sin))
+        learnOp(Op.UnaryOperation("cos", cos))
         learnOp(Op.UnaryOperation("√", sqrt))
     }
     
@@ -64,6 +73,18 @@ class CalculatorBrain
                         return (operation(operand1, operand2), op2Evaluation.remainingOps)
                     }
                 }
+            case .Variable(let key):
+                if let value = variableValues[key] {
+                    return (value, remainingOps)
+                } else {
+                    return (nil, remainingOps)
+                }
+            case .Constant(let key):
+                if let value = constantValues[key] {
+                    return (value, remainingOps)
+                } else {
+                    return (nil, remainingOps)
+                }
             }
         }
         return (nil, ops)
@@ -77,6 +98,15 @@ class CalculatorBrain
     
     func pushOperand(operand: Double) -> Double? {
         opStack.append(Op.Operand(operand))
+        return evaluate()
+    }
+    
+    func pushOperand(symbol: String) -> Double? {
+        if let key = constantValues[symbol] {
+            opStack.append(Op.Constant(symbol))
+        } else if let key = variableValues[symbol] {
+            opStack.append(Op.Variable(symbol))
+        }
         return evaluate()
     }
     

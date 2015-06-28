@@ -31,6 +31,16 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func addSymbol(sender: UIButton) {
+        if userIsInTheMiddleOfTypingANumber {
+            enter()
+        }
+        
+        if let symbol = sender.currentTitle {
+            displayValue = brain.pushOperand(symbol)
+        }
+    }
+    
     @IBAction func clear() {
         userIsInTheMiddleOfTypingANumber = false
         display.text = "0"
@@ -44,11 +54,7 @@ class ViewController: UIViewController {
         }
         if let operation = sender.currentTitle {
             addHistory(operation)
-            if let result = brain.performOperation(operation) {
-                displayValue = result
-            } else {
-                displayValue = 0
-            }
+            displayValue = brain.performOperation(operation)
         }
     }
 
@@ -75,11 +81,7 @@ class ViewController: UIViewController {
     
     var displayValue: Double? {
         get {
-            if let test = NSNumberFormatter().numberFromString(display.text!) {
-                return test.doubleValue
-            } else {
-                return nil
-            }
+            return NSNumberFormatter().numberFromString(display.text!)?.doubleValue
         }
         
         set {
