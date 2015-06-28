@@ -60,10 +60,12 @@ class ViewController: UIViewController {
     
     private func addOperand() {
         userIsInTheMiddleOfTypingANumber = false
-        if let result = brain.pushOperand(displayValue) {
-            displayValue = result
-        } else {
-            displayValue = 0
+        if let validDisplayValue = displayValue {
+            if let result = brain.pushOperand(validDisplayValue) {
+                displayValue = result
+            } else {
+                displayValue = 0
+            }
         }
     }
     
@@ -72,15 +74,22 @@ class ViewController: UIViewController {
         historyDisplay.text = "\(history)"
     }
     
-    var displayValue: Double {
+    var displayValue: Double? {
         get {
-            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+            if let test = NSNumberFormatter().numberFromString(display.text!) {
+                return test.doubleValue
+            } else {
+                return nil
+            }
         }
         
         set {
-            display.text = "\(newValue)"
+            if let test = newValue {
+                display.text = "\(test)"
+            } else {
+                display.text = "An error has occurred"
+            }
             userIsInTheMiddleOfTypingANumber = false
         }
     }
 }
-

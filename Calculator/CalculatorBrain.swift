@@ -86,5 +86,4 @@ class CalculatorBrain
         }
         return evaluate()
     }
-    
 }
