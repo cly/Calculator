@@ -76,7 +76,7 @@ class CalculatorBrain
                     if let firstResult = first.result {
                         return ("(\(firstResult)\(symbol)\(secondResult))", first.remainingOps)
                     } else {
-                        return ("Error", remainingOps)
+                        return ("(?\(symbol)\(secondResult))", second.remainingOps)
                     }
                 } else {
                     return ("Error", remainingOps)
