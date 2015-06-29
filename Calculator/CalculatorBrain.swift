@@ -39,6 +39,11 @@ class CalculatorBrain
     private var knownOps = [String:Op]()
     var variableValues = [String:Double]()
     let constantValues = ["π": M_PI]
+    var description: String {
+        get {
+            return ""
+        }
+    }
     
     init() {
         func learnOp(op: Op) {
@@ -104,16 +109,19 @@ class CalculatorBrain
     func pushOperand(symbol: String) -> Double? {
         if let key = constantValues[symbol] {
             opStack.append(Op.Constant(symbol))
+            return evaluate()
         } else if let key = variableValues[symbol] {
             opStack.append(Op.Variable(symbol))
+            return evaluate()
         }
-        return evaluate()
+        return nil
     }
     
     func performOperation(symbol: String) -> Double? {
         if let operation = knownOps[symbol] {
             opStack.append(operation)
+            return evaluate()
         }
-        return evaluate()
+        return nil
     }
 }

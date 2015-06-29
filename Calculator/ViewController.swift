@@ -12,7 +12,6 @@ import Foundation
 class ViewController: UIViewController {
     
     var userIsInTheMiddleOfTypingANumber = false
-        var history = Array<String>()
     var brain = CalculatorBrain()
     @IBOutlet weak var historyDisplay: UILabel!
     @IBOutlet weak var display: UILabel!
@@ -44,8 +43,7 @@ class ViewController: UIViewController {
     @IBAction func clear() {
         userIsInTheMiddleOfTypingANumber = false
         display.text = "0"
-        history = Array<String>()
-        historyDisplay.text = "\(history)"
+        historyDisplay.text = "\(brain.description)"
     }
     
     @IBAction func operate(sender: UIButton) {
@@ -53,14 +51,12 @@ class ViewController: UIViewController {
             enter()
         }
         if let operation = sender.currentTitle {
-            addHistory(operation)
             displayValue = brain.performOperation(operation)
         }
     }
 
     @IBAction func enter() {
         addOperand()
-        addHistory(display.text!)
     }
     
     private func addOperand() {
@@ -72,11 +68,6 @@ class ViewController: UIViewController {
                 displayValue = 0
             }
         }
-    }
-    
-    private func addHistory(item: String) {
-        history.insert(item, atIndex: 0)
-        historyDisplay.text = "\(history)"
     }
     
     var displayValue: Double? {
