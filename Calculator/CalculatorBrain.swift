@@ -63,7 +63,7 @@ class CalculatorBrain
             case .UnaryOperation(let symbol, let operation):
                 var inner = description(remainingOps)
                 if let result = inner.result{
-                    return ("\(symbol)(\(result))", remainingOps)
+                    return ("\(symbol)(\(result))", inner.remainingOps)
                 } else {
                     return ("Error", remainingOps)
                 }
@@ -74,27 +74,17 @@ class CalculatorBrain
                     var first = description(second.remainingOps)
                     
                     if let firstResult = first.result {
-                        return ("\(firstResult)\(symbol)\(secondResult)", remainingOps)
+                        return ("(\(firstResult)\(symbol)\(secondResult))", first.remainingOps)
                     } else {
                         return ("Error", remainingOps)
                     }
                 } else {
                     return ("Error", remainingOps)
                 }
-//            case .Variable(let key):
-//                if let value = variableValues[key] {
-//                    return (value, remainingOps)
-//                } else {
-//                    return (nil, remainingOps)
-//                }
-//            case .Constant(let key):
-//                if let value = constantValues[key] {
-//                    return (value, remainingOps)
-//                } else {
-//                    return (nil, remainingOps)
-//                }
-            default:
-                return (nil, ops)
+            case .Variable(let key):
+                return ("\(key)", remainingOps)
+            case .Constant(let key):
+                return ("\(key)", remainingOps)
             }
         }
         
