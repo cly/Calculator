@@ -41,15 +41,24 @@ class CalculatorBrain
     let constantValues = ["π": M_PI]
     var description: String {
         get {
-            var (result, _) = description(opStack)
-            if let output = result {
-                println("\(output)")
-                
-                return "\(output)"
-            } else {
-                println("Error")
-                return "Error"
+            var results = [String]()
+            var remainingOps = opStack
+            
+            while true {
+                var singleResult = description(remainingOps)
+                remainingOps = singleResult.remainingOps
+                if let output = singleResult.result {
+                    results.insert(output, atIndex: 0)
+                    if remainingOps.isEmpty {
+                        break
+                    }
+                } else {
+                    break
+                }
             }
+            
+            println(",".join(results))
+            return(",".join(results))
         }
     }
 

@@ -60,7 +60,6 @@ class ViewController: UIViewController {
         userIsInTheMiddleOfTypingANumber = false
         if let validDisplayValue = displayValue {
             displayValue = brain.pushOperand(validDisplayValue)
-            historyDisplay.text = "\(brain.description)"
         }
     }
     
