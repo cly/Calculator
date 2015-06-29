@@ -65,30 +65,36 @@ class CalculatorBrain
                 if let result = inner.result{
                     return ("\(symbol)(\(result))", remainingOps)
                 } else {
-                    return ("\(symbol)(Error)", remainingOps)
+                    return ("Error", remainingOps)
                 }
+            case .BinaryOperation(let symbol, let operation):
+                var second = description(remainingOps)
+                
+                if let secondResult = second.result {
+                    var first = description(second.remainingOps)
+                    
+                    if let firstResult = first.result {
+                        return ("\(firstResult)\(symbol)\(secondResult)", remainingOps)
+                    } else {
+                        return ("Error", remainingOps)
+                    }
+                } else {
+                    return ("Error", remainingOps)
+                }
+//            case .Variable(let key):
+//                if let value = variableValues[key] {
+//                    return (value, remainingOps)
+//                } else {
+//                    return (nil, remainingOps)
+//                }
+//            case .Constant(let key):
+//                if let value = constantValues[key] {
+//                    return (value, remainingOps)
+//                } else {
+//                    return (nil, remainingOps)
+//                }
             default:
                 return (nil, ops)
-                //                    case .BinaryOperation(_, let operation):
-                //                        let op1Evaluation = evaluate(remainingOps)
-                //                        if let operand1 = op1Evaluation.result {
-                //                            let op2Evaluation = evaluate(op1Evaluation.remainingOps)
-                //                            if let operand2 = op2Evaluation.result {
-                //                                return (operation(operand1, operand2), op2Evaluation.remainingOps)
-                //                            }
-                //                        }
-                //                    case .Variable(let key):
-                //                        if let value = variableValues[key] {
-                //                            return (value, remainingOps)
-                //                        } else {
-                //                            return (nil, remainingOps)
-                //                        }
-                //                    case .Constant(let key):
-                //                        if let value = constantValues[key] {
-                //                            return (value, remainingOps)
-                //                        } else {
-                //                            return (nil, remainingOps)
-                //                        }
             }
         }
         
@@ -102,7 +108,7 @@ class CalculatorBrain
         learnOp(Op.BinaryOperation("×", *))
         learnOp(Op.BinaryOperation("÷", { $1 / $0 }))
         learnOp(Op.BinaryOperation("+", +))
-        learnOp(Op.BinaryOperation("−", { $1 * $0 }))
+        learnOp(Op.BinaryOperation("−", { $1 - $0 }))
         learnOp(Op.UnaryOperation("sin", sin))
         learnOp(Op.UnaryOperation("cos", cos))
         learnOp(Op.UnaryOperation("√", sqrt))
