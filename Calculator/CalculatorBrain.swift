@@ -41,8 +41,58 @@ class CalculatorBrain
     let constantValues = ["π": M_PI]
     var description: String {
         get {
-            return ""
+            var (result, _) = description(opStack)
+            if let output = result {
+                println("\(output)")
+                
+                return "\(output)"
+            } else {
+                println("Error")
+                return "Error"
+            }
         }
+    }
+
+    private func description(ops: [Op]) -> (result: String?, remainingOps: [Op]) {
+        if !ops.isEmpty {
+            var remainingOps = ops
+            let op = remainingOps.removeLast()
+            switch op {
+            case .Operand(let operand):
+                return ("\(operand)", remainingOps)
+            case .UnaryOperation(let symbol, let operation):
+                var inner = description(remainingOps)
+                if let result = inner.result{
+                    return ("\(symbol)(\(result))", remainingOps)
+                } else {
+                    return ("\(symbol)(Error)", remainingOps)
+                }
+            default:
+                return (nil, ops)
+                //                    case .BinaryOperation(_, let operation):
+                //                        let op1Evaluation = evaluate(remainingOps)
+                //                        if let operand1 = op1Evaluation.result {
+                //                            let op2Evaluation = evaluate(op1Evaluation.remainingOps)
+                //                            if let operand2 = op2Evaluation.result {
+                //                                return (operation(operand1, operand2), op2Evaluation.remainingOps)
+                //                            }
+                //                        }
+                //                    case .Variable(let key):
+                //                        if let value = variableValues[key] {
+                //                            return (value, remainingOps)
+                //                        } else {
+                //                            return (nil, remainingOps)
+                //                        }
+                //                    case .Constant(let key):
+                //                        if let value = constantValues[key] {
+                //                            return (value, remainingOps)
+                //                        } else {
+                //                            return (nil, remainingOps)
+                //                        }
+            }
+        }
+        
+        return (nil, ops)
     }
     
     init() {

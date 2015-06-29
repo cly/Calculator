@@ -53,20 +53,14 @@ class ViewController: UIViewController {
         if let operation = sender.currentTitle {
             displayValue = brain.performOperation(operation)
         }
+        historyDisplay.text = "\(brain.description)"
     }
 
     @IBAction func enter() {
-        addOperand()
-    }
-    
-    private func addOperand() {
         userIsInTheMiddleOfTypingANumber = false
         if let validDisplayValue = displayValue {
-            if let result = brain.pushOperand(validDisplayValue) {
-                displayValue = result
-            } else {
-                displayValue = 0
-            }
+            displayValue = brain.pushOperand(validDisplayValue)
+            historyDisplay.text = "\(brain.description)"
         }
     }
     
