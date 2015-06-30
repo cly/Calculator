@@ -171,6 +171,14 @@ class CalculatorBrain
         return nil
     }
     
+    func clearAllVariables() {
+        variableValues.removeAll()
+    }
+    
+    func clearOpStack() {
+        opStack.removeAll()
+    }
+    
     func performOperation(symbol: String) -> Double? {
         if let operation = knownOps[symbol] {
             opStack.append(operation)

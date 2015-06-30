@@ -41,9 +41,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func clear() {
+        brain.clearAllVariables()
+        brain.clearOpStack()
         userIsInTheMiddleOfTypingANumber = false
         displayValue = nil
-        historyDisplay.text = " "
     }
     
     @IBAction func operate(sender: UIButton) {
@@ -53,7 +54,6 @@ class ViewController: UIViewController {
         if let operation = sender.currentTitle {
             displayValue = brain.performOperation(operation)
         }
-        historyDisplay.text = "\(brain.description)"
     }
 
     @IBAction func enter() {
@@ -85,8 +85,8 @@ class ViewController: UIViewController {
                 display.text = "\(test)"
             } else {
                 display.text = " "
-                historyDisplay.text = " "
             }
+            historyDisplay.text = "\(brain.description)"
             userIsInTheMiddleOfTypingANumber = false
         }
     }
