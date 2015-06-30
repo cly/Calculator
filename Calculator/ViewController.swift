@@ -42,8 +42,8 @@ class ViewController: UIViewController {
     
     @IBAction func clear() {
         userIsInTheMiddleOfTypingANumber = false
-        display.text = "0"
-        historyDisplay.text = "\(brain.description)"
+        displayValue = nil
+        historyDisplay.text = " "
     }
     
     @IBAction func operate(sender: UIButton) {
@@ -63,6 +63,18 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func setVariable(sender: UIButton) {
+        displayValue = brain.setVariable("M", value: displayValue)
+        userIsInTheMiddleOfTypingANumber = false
+    }
+    
+    @IBAction func getVariable(sender: UIButton) {
+        enter()
+        if let v = brain.pushOperand("M") {
+            displayValue = v
+        }
+    }
+    
     var displayValue: Double? {
         get {
             return NSNumberFormatter().numberFromString(display.text!)?.doubleValue
@@ -72,7 +84,8 @@ class ViewController: UIViewController {
             if let test = newValue {
                 display.text = "\(test)"
             } else {
-                clear()
+                display.text = " "
+                historyDisplay.text = " "
             }
             userIsInTheMiddleOfTypingANumber = false
         }

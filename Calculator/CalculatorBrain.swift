@@ -134,17 +134,9 @@ class CalculatorBrain
                     }
                 }
             case .Variable(let key):
-                if let value = variableValues[key] {
-                    return (value, remainingOps)
-                } else {
-                    return (nil, remainingOps)
-                }
+                return (variableValues[key], remainingOps)
             case .Constant(let key):
-                if let value = constantValues[key] {
-                    return (value, remainingOps)
-                } else {
-                    return (nil, remainingOps)
-                }
+                return (constantValues[key], remainingOps)
             }
         }
         return (nil, ops)
@@ -165,8 +157,15 @@ class CalculatorBrain
         if let key = constantValues[symbol] {
             opStack.append(Op.Constant(symbol))
             return evaluate()
-        } else if let key = variableValues[symbol] {
+        } else {
             opStack.append(Op.Variable(symbol))
+            return evaluate()
+        }
+    }
+    
+    func setVariable(symbol: String, value: Double?) -> Double? {
+        if let realValue = value {
+            variableValues[symbol] = realValue
             return evaluate()
         }
         return nil
