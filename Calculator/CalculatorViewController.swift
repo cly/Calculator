@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CalculatorViewController.swift
 //  Calculator
 //
 //  Created by Charlie Yuan on 6/14/15.
@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class ViewController: UIViewController {
+class CalculatorViewController: UIViewController {
     
     var userIsInTheMiddleOfTypingANumber = false
     var brain = CalculatorBrain()
