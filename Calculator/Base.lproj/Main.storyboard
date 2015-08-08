@@ -424,10 +424,10 @@
             </objects>
             <point key="canvasLocation" x="1019" y="-383"/>
         </scene>
-        <!--View Controller-->
+        <!--Graph View Controller-->
         <scene sceneID="B4C-sC-M4W">
             <objects>
-                <viewController id="ode-H4-hY6" sceneMemberID="viewController">
+                <viewController id="ode-H4-hY6" customClass="GraphViewController" customModule="Calculator" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tgx-48-0UF"/>
                         <viewControllerLayoutGuide type="bottom" id="hL7-LV-Tvb"/>
@@ -436,19 +436,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bog-eJ-bOw">
-                                <rect key="frame" x="262" y="119" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rls-2p-EKI" customClass="GraphView" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="16" y="10" width="568" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="rls-2p-EKI" firstAttribute="top" secondItem="tgx-48-0UF" secondAttribute="bottom" id="JUW-EX-TI4"/>
+                            <constraint firstItem="rls-2p-EKI" firstAttribute="leading" secondItem="0H8-y3-4aw" secondAttribute="leadingMargin" id="XwJ-su-7VZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="rls-2p-EKI" secondAttribute="trailing" id="ab2-hH-Hdg"/>
+                            <constraint firstItem="hL7-LV-Tvb" firstAttribute="top" secondItem="rls-2p-EKI" secondAttribute="bottom" id="kbb-1d-KSG"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="graphView" destination="rls-2p-EKI" id="Va3-1C-La8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eq4-74-nOi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1019" y="280"/>
+            <point key="canvasLocation" x="986" y="414"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="FnF-QW-tgU">
@@ -470,6 +477,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="erR-fU-gep"/>
+        <segue reference="QeL-hT-7dG"/>
     </inferredMetricsTieBreakers>
 </document>
