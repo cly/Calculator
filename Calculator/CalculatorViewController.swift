@@ -11,8 +11,8 @@ import Foundation
 
 class CalculatorViewController: UIViewController {
     
-    var userIsInTheMiddleOfTypingANumber = false
-    var brain = CalculatorBrain()
+    private var userIsInTheMiddleOfTypingANumber = false
+    private var brain = CalculatorBrain()
     @IBOutlet weak var historyDisplay: UILabel!
     @IBOutlet weak var display: UILabel!
 
@@ -75,7 +75,7 @@ class CalculatorViewController: UIViewController {
         }
     }
     
-    var displayValue: Double? {
+    private var displayValue: Double? {
         get {
             return NSNumberFormatter().numberFromString(display.text!)?.doubleValue
         }

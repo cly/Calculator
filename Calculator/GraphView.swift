@@ -8,7 +8,6 @@
 
 import UIKit
 
-@IBDesignable
 class GraphView: UIView {
     
     var origin: CGPoint! {
