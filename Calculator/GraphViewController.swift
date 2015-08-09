@@ -17,10 +17,10 @@ class GraphViewController: UIViewController {
             
         }
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        graphView.origin = CGPoint.zeroPoint
-    }
+//    
+//    override func viewDidAppear(animated: Bool) {
+//        super.viewDidAppear(animated)
+//        graphView.origin = CGPoint.zeroPoint
+//    }
     
 }

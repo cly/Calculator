@@ -12,6 +12,7 @@ class GraphView: UIView {
     
     var origin: CGPoint! {
         didSet {
+            resetOrigin = false
             setNeedsDisplay()
         }
     }
@@ -22,12 +23,25 @@ class GraphView: UIView {
         }
     }
     
+    // Flag to see if we should re-center or not. If the origin ever changes, then do not re-center.
+    private var resetOrigin: Bool = true {
+        didSet {
+            if resetOrigin {
+                setNeedsDisplay()
+            }
+        }
+    }
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         origin = convertPoint(center, fromView: superview)
     }
     
     override func drawRect(rect: CGRect) {
+        if resetOrigin {
+            origin = center
+        }
+        
         let axesDrawer = AxesDrawer(contentScaleFactor: contentScaleFactor)
         axesDrawer.drawAxesInRect(bounds, origin: origin, pointsPerUnit: pointsPerUnit)
     }
