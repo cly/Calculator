@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol GraphViewDataSource: class {
+    func y(x: CGFloat) -> CGFloat?
+}
+
 class GraphView: UIView {
     
     var origin: CGPoint! {
@@ -22,6 +26,20 @@ class GraphView: UIView {
             setNeedsDisplay()
         }
     }
+    
+    var lineWidth: CGFloat = 1.0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    var color: UIColor = UIColor.blackColor() {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    weak var dataSource: GraphViewDataSource?
     
     // Flag to see if we should re-center or not. If the origin ever changes, then do not re-center.
     private var resetOrigin: Bool = true {
@@ -44,5 +62,30 @@ class GraphView: UIView {
         
         let axesDrawer = AxesDrawer(contentScaleFactor: contentScaleFactor)
         axesDrawer.drawAxesInRect(bounds, origin: origin, pointsPerUnit: pointsPerUnit)
+        
+        color.set()
+        let path = UIBezierPath()
+        path.lineWidth = lineWidth
+        
+        var firstValue = true
+        var point = CGPoint()
+        
+        for var i = 0; i <= Int(bounds.size.width * contentScaleFactor); i++ {
+            point.x = CGFloat(i) / contentScaleFactor
+            if let y = dataSource?.y((point.x - origin.x) / pointsPerUnit) {
+                if !y.isNormal && !y.isZero {
+                    continue
+                }
+                point.y = origin.y - y * pointsPerUnit
+                
+                if firstValue {
+                    path.moveToPoint(point)
+                    firstValue = false
+                } else {
+                    path.addLineToPoint(point)
+                }
+            }
+        }
+        path.stroke()
     }
 }

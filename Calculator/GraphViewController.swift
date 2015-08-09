@@ -9,18 +9,33 @@
 import UIKit
 import Foundation
 
-class GraphViewController: UIViewController {
+class GraphViewController: UIViewController, GraphViewDataSource {
 
     
     @IBOutlet weak var graphView: GraphView! {
         didSet {
-            
+            graphView.dataSource = self
         }
     }
-//    
-//    override func viewDidAppear(animated: Bool) {
-//        super.viewDidAppear(animated)
-//        graphView.origin = CGPoint.zeroPoint
-//    }
+
+    func y(x: CGFloat) -> CGFloat? {
+        brain.variableValues["M"] = Double(x)
+        if let y = brain.evaluate() {
+            return CGFloat(y)
+        }
+        return nil
+    }
+    
+    private var brain = CalculatorBrain()
+    typealias PropertyList = AnyObject
+    
+    var program: PropertyList {
+        get {
+            return brain.program
+        }
+        set {
+            brain.program = newValue
+        }
+    }
     
 }

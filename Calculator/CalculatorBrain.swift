@@ -126,6 +126,8 @@ class CalculatorBrain
                         newOpStack.append(op)
                     } else if let operand = NSNumberFormatter().numberFromString(opSymbol)?.doubleValue {
                         newOpStack.append(.Operand(operand))
+                    } else {
+                        newOpStack.append(.Variable(opSymbol))
                     }
                 }
                 opStack = newOpStack
@@ -162,7 +164,7 @@ class CalculatorBrain
         return (nil, ops)
     }
     
-    private func evaluate() -> Double? {
+    func evaluate() -> Double? {
         let (result, remainder) = evaluate(opStack)
         println("\(opStack) = \(result) with \(remainder) left over")
         return result

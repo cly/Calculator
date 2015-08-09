@@ -104,6 +104,7 @@ class CalculatorViewController: UIViewController {
                 switch identifier {
                 case "plotGraph":
                     gvc.title = brain.description == "" ? "Graph" : brain.description.componentsSeparatedByString(", ").last
+                    gvc.program = brain.program
                 default:
                     break
                 }
