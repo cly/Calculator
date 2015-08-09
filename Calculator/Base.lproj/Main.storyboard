@@ -10,7 +10,7 @@
             <objects>
                 <splitViewController id="JWr-q6-vxy" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="ode-H4-hY6" kind="relationship" relationship="detailViewController" id="QeL-hT-7dG"/>
+                        <segue destination="a4f-sj-8XG" kind="relationship" relationship="detailViewController" id="QeL-hT-7dG"/>
                         <segue destination="ncx-Au-p4Q" kind="relationship" relationship="masterViewController" id="Bqn-zL-GvT"/>
                     </connections>
                 </splitViewController>
@@ -159,7 +159,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="ode-H4-hY6" kind="showDetail" id="erR-fU-gep"/>
+                                    <segue destination="a4f-sj-8XG" kind="showDetail" id="erR-fU-gep"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Igo-eO-WaN">
@@ -424,7 +424,7 @@
             </objects>
             <point key="canvasLocation" x="1019" y="-383"/>
         </scene>
-        <!--Graph View Controller-->
+        <!--Graph-->
         <scene sceneID="B4C-sC-M4W">
             <objects>
                 <viewController id="ode-H4-hY6" customClass="GraphViewController" customModule="Calculator" customModuleProvider="target" sceneMemberID="viewController">
@@ -449,13 +449,14 @@
                             <constraint firstItem="hL7-LV-Tvb" firstAttribute="top" secondItem="rls-2p-EKI" secondAttribute="bottom" id="kbb-1d-KSG"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Graph" id="5FR-XT-Y0P"/>
                     <connections>
                         <outlet property="graphView" destination="rls-2p-EKI" id="Va3-1C-La8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eq4-74-nOi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="986" y="414"/>
+            <point key="canvasLocation" x="1019" y="388"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="FnF-QW-tgU">
@@ -475,8 +476,26 @@
             </objects>
             <point key="canvasLocation" x="207" y="-383"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="1tg-q5-r9h">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="a4f-sj-8XG" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ASc-0q-jP9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ode-H4-hY6" kind="relationship" relationship="rootViewController" id="Dyt-iu-KXy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vl4-tk-Fgr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="207" y="388"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="QeL-hT-7dG"/>
+        <segue reference="erR-fU-gep"/>
     </inferredMetricsTieBreakers>
 </document>
