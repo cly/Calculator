@@ -12,6 +12,7 @@ protocol GraphViewDataSource: class {
     func y(x: CGFloat) -> CGFloat?
 }
 
+@IBDesignable
 class GraphView: UIView {
     
     var origin: CGPoint! {
@@ -21,6 +22,7 @@ class GraphView: UIView {
         }
     }
     
+    @IBInspectable
     var pointsPerUnit: CGFloat = 50 {
         didSet {
             setNeedsDisplay()
