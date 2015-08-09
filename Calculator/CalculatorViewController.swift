@@ -90,4 +90,24 @@ class CalculatorViewController: UIViewController {
             userIsInTheMiddleOfTypingANumber = false
         }
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var destination = segue.destinationViewController as? UIViewController
+        
+        // Safely handles segues that are not going to a navigation controller.
+        if let nc = destination as? UINavigationController {
+            destination = nc.visibleViewController
+        }
+        
+        if let gvc = destination as? GraphViewController {
+            if let identifier = segue.identifier {
+                switch identifier {
+                case "plotGraph":
+                    gvc.title = brain.description == "" ? "Graph" : brain.description.componentsSeparatedByString(", ").last
+                default:
+                    break
+                }
+            }
+        }
+    }
 }

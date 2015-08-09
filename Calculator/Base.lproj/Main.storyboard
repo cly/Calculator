@@ -159,7 +159,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="a4f-sj-8XG" kind="showDetail" id="erR-fU-gep"/>
+                                    <segue destination="a4f-sj-8XG" kind="showDetail" identifier="plotGraph" id="erR-fU-gep"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Igo-eO-WaN">
